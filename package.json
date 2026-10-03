@@ -1,0 +1,25 @@
+{
+  "name": "awais-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@types/nodemailer": "^8.0.2",
+    "framer-motion": "^14.0.0",
+    "lucide-react": "^1.50.0",
+    "next": "14.2.15",
+    "nodemailer": "^10.0.13",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.0",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "typescript": "5.5.4"
+  }
+}
