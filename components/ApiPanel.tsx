@@ -107,14 +107,7 @@ export default function ApiPanel() {
   const statusColor = failed ? "#f87171" : ms === null || loading ? "#38bdf8" : "#34d399";
 
   return (
-    <section
-      id="api-panel"
-      style={{
-        padding: "6rem 0",
-        position: "relative",
-        borderTop: "1px solid rgba(255, 255, 255, 0.06)",
-      }}
-    >
+    <section id="api-panel" className="section section-rule">
       <div className="api-glow" aria-hidden="true" />
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <motion.div
@@ -131,16 +124,15 @@ export default function ApiPanel() {
           }}
         >
           <motion.span
-            className="tag"
+            className="glass-pill"
             initial={reduce ? false : { opacity: 0, scale: 0.92 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.05, duration: 0.35 }}
             style={{
-              background: "rgba(16, 185, 129, 0.12)",
-              borderColor: "rgba(16, 185, 129, 0.3)",
               color: "#6ee7b7",
               marginBottom: "1rem",
+              borderColor: "rgba(16, 185, 129, 0.32)",
             }}
           >
             <Radio size={14} />
@@ -192,19 +184,7 @@ export default function ApiPanel() {
           transition={{ duration: 0.6, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="api-console">
-            <div
-              className="api-toolbar"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: "0.75rem",
-                flexWrap: "wrap",
-                padding: "0.85rem 1.25rem",
-                background: "rgba(15, 23, 42, 0.9)",
-                borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-              }}
-            >
+            <div className="api-toolbar">
               <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
                 <div style={{ display: "flex", gap: "0.4rem" }}>
                   <span className="api-traffic" style={{ background: "#ef4444" }} />

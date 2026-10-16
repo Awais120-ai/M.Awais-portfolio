@@ -1,3 +1,5 @@
+import GlassScene from "@/components/GlassScene";
+import ScrollProgress from "@/components/ScrollProgress";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import ProjectsSection from "@/components/ProjectsSection";
@@ -10,6 +12,8 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
+      <GlassScene />
+      <ScrollProgress />
       <div id="top" />
       <Navbar />
       <main>

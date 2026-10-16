@@ -6,6 +6,7 @@ const sans = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
+  weight: ["500", "600", "700", "800"],
 });
 
 const mono = JetBrains_Mono({
@@ -17,7 +18,7 @@ const mono = JetBrains_Mono({
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1.0,
-  themeColor: "#07090e",
+  themeColor: "#05070d",
 };
 
 export const metadata: Metadata = {

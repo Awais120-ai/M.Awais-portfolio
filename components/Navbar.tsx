@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { profile } from "@/data/profile";
 import { GithubIcon, LinkedinIcon, WhatsAppIcon } from "@/components/Icons";
+import Magnetic from "@/components/Magnetic";
 import { Menu, X, Mail, ArrowUpRight, Code2 } from "lucide-react";
 
 const NAV_LINKS = [
@@ -24,15 +25,12 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-
       const sections = NAV_LINKS.map((l) => l.href.substring(1));
       const current = sections.find((sec) => {
         const el = document.getElementById(sec);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          return rect.top <= 160 && rect.bottom >= 160;
-        }
-        return false;
+        if (!el) return false;
+        const rect = el.getBoundingClientRect();
+        return rect.top <= 160 && rect.bottom >= 160;
       });
       if (current) setActiveSection(current);
     };
@@ -43,30 +41,12 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header
-      className={scrolled ? "site-header nav-scrolled" : "site-header"}
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-        background: scrolled ? "rgba(7, 9, 14, 0.9)" : "rgba(7, 9, 14, 0.4)",
-        backdropFilter: "blur(16px)",
-        borderBottom: scrolled ? "1px solid rgba(255, 255, 255, 0.08)" : "1px solid transparent",
-        transition: "background 0.3s ease, border-color 0.3s ease",
-      }}
-    >
+    <header className={scrolled ? "site-header nav-scrolled" : "site-header"}>
       <motion.div
-        className="container"
-        initial={reduce ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.45 }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: scrolled ? "0.6rem 1.5rem" : "1rem 1.5rem",
-          transition: "padding 0.3s ease",
-        }}
+        className="nav-shell"
+        initial={reduce ? false : { opacity: 0, y: -16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       >
         <motion.a
           href="#top"
@@ -74,9 +54,10 @@ export default function Navbar() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.75rem",
+            gap: "0.7rem",
             textDecoration: "none",
             color: "#fff",
+            minWidth: 0,
           }}
         >
           <motion.div
@@ -88,44 +69,17 @@ export default function Navbar() {
             <Code2 size={18} color="#fff" />
           </motion.div>
           <div>
-            <span
-              style={{
-                fontWeight: 700,
-                fontSize: "1.05rem",
-                letterSpacing: "-0.01em",
-                display: "block",
-                lineHeight: 1.2,
-              }}
-            >
+            <span style={{ fontWeight: 750, fontSize: "0.98rem", display: "block", lineHeight: 1.15 }}>
               Awais Farooq
             </span>
-            <span
-              style={{
-                fontSize: "0.725rem",
-                color: "#94a3b8",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.35rem",
-              }}
-            >
+            <span className="nav-brand-meta">
               <span className="nav-live-dot" />
               Full Stack Dev
             </span>
           </div>
         </motion.a>
 
-        <nav
-          className="desktop-nav"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.25rem",
-            background: "rgba(255, 255, 255, 0.03)",
-            padding: "0.3rem",
-            borderRadius: "9999px",
-            border: "1px solid rgba(255, 255, 255, 0.06)",
-          }}
-        >
+        <nav className="desktop-nav">
           {NAV_LINKS.map((link) => {
             const isActive = activeSection === link.href.substring(1);
             return (
@@ -147,65 +101,49 @@ export default function Navbar() {
           })}
         </nav>
 
-        <div
-          className="nav-actions"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.65rem",
-          }}
-        >
-          <motion.a
-            href={profile.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub Profile"
-            className="nav-social nav-icon nav-icon-gh"
-            whileHover={reduce ? undefined : { y: -4, scale: 1.08 }}
-            whileTap={reduce ? undefined : { scale: 0.94 }}
-          >
-            <GithubIcon size={16} />
-          </motion.a>
-          <motion.a
-            href={profile.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn Profile"
-            className="nav-social nav-icon nav-icon-li"
-            whileHover={reduce ? undefined : { y: -4, scale: 1.08 }}
-            whileTap={reduce ? undefined : { scale: 0.94 }}
-          >
-            <LinkedinIcon size={16} />
-          </motion.a>
-          <a
-            href="#contact"
-            className="btn-primary nav-cta"
-            style={{
-              padding: "0.55rem 1.1rem",
-              fontSize: "0.85rem",
-              borderRadius: "0.6rem",
-            }}
-          >
-            <span>Let&apos;s Connect</span>
-            <span className="nav-cta-arrow">
-              <ArrowUpRight size={15} />
-            </span>
-          </a>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <Magnetic>
+            <motion.a
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub Profile"
+              className="nav-social nav-icon nav-icon-gh"
+              whileTap={reduce ? undefined : { scale: 0.94 }}
+            >
+              <GithubIcon size={16} />
+            </motion.a>
+          </Magnetic>
+          <Magnetic>
+            <motion.a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn Profile"
+              className="nav-social nav-icon nav-icon-li"
+              whileTap={reduce ? undefined : { scale: 0.94 }}
+            >
+              <LinkedinIcon size={16} />
+            </motion.a>
+          </Magnetic>
+          <Magnetic>
+            <a
+              href="#contact"
+              className="btn-primary nav-cta"
+              style={{ padding: "0.5rem 1rem", fontSize: "0.82rem" }}
+            >
+              <span>Let&apos;s Connect</span>
+              <span className="nav-cta-arrow">
+                <ArrowUpRight size={15} />
+              </span>
+            </a>
+          </Magnetic>
 
           <button
             onClick={() => setMobileMenuOpen((open) => !open)}
             className="mobile-toggle"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
-            style={{
-              display: "none",
-              background: "rgba(255, 255, 255, 0.05)",
-              border: "1px solid rgba(255, 255, 255, 0.1)",
-              borderRadius: "0.5rem",
-              padding: "0.5rem",
-              color: "#fff",
-              cursor: "pointer",
-            }}
           >
             <AnimatePresence mode="wait" initial={false}>
               <motion.span
@@ -226,23 +164,17 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            className="nav-drawer"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            style={{
-              background: "rgba(10, 14, 23, 0.98)",
-              backdropFilter: "blur(20px)",
-              borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-              overflow: "hidden",
-            }}
           >
             <div
-              className="container"
               style={{
-                padding: "1.25rem 1.5rem 1.5rem",
+                padding: "1rem 1.15rem 1.25rem",
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.15rem",
+                gap: "0.1rem",
               }}
             >
               {NAV_LINKS.map((link, index) => (
@@ -258,42 +190,8 @@ export default function Navbar() {
                   {link.name}
                 </motion.a>
               ))}
-              <div style={{ display: "flex", gap: "0.6rem", paddingTop: "0.85rem" }}>
-                <motion.a
-                  href={profile.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub Profile"
-                  className="nav-social nav-icon-gh"
-                  whileHover={reduce ? undefined : { y: -3, scale: 1.06 }}
-                >
-                  <GithubIcon size={16} />
-                </motion.a>
-                <motion.a
-                  href={profile.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn Profile"
-                  className="nav-social nav-icon-li"
-                  whileHover={reduce ? undefined : { y: -3, scale: 1.06 }}
-                >
-                  <LinkedinIcon size={16} />
-                </motion.a>
-              </div>
-              <div
-                className="mobile-actions"
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "0.75rem",
-                  paddingTop: "0.75rem",
-                }}
-              >
-                <a
-                  href={`mailto:${profile.email}`}
-                  className="btn-secondary"
-                  style={{ flex: 1, textAlign: "center", fontSize: "0.85rem" }}
-                >
+              <div className="mobile-actions" style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", paddingTop: "0.9rem" }}>
+                <a href={`mailto:${profile.email}`} className="btn-secondary" style={{ flex: 1, fontSize: "0.85rem" }}>
                   <Mail size={15} /> Email
                 </a>
                 <a
@@ -301,7 +199,7 @@ export default function Navbar() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary"
-                  style={{ flex: 1, textAlign: "center", fontSize: "0.85rem" }}
+                  style={{ flex: 1, fontSize: "0.85rem" }}
                 >
                   <WhatsAppIcon size={15} /> WhatsApp
                 </a>
@@ -310,19 +208,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <style jsx>{`
-        @media (max-width: 1100px) {
-          .desktop-nav,
-          .nav-icon,
-          .nav-cta {
-            display: none !important;
-          }
-          .mobile-toggle {
-            display: flex !important;
-          }
-        }
-      `}</style>
     </header>
   );
 }

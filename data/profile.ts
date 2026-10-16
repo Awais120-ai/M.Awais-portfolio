@@ -59,6 +59,7 @@ export const profile = {
   linkedin: "https://linkedin.com/in/muhammad-awais-farooq",
   github: "https://github.com/awaisfarooq",
   avatar: "/profile.png",
+  resume: "/Muhammad-Awais-Farooq-CV.pdf",
   bio: "I architect and craft complete web applications from high-performance React & Next.js user interfaces to ultra-fast FastAPI microservices, real-time WebSockets, and resilient SQL databases. Computer Science specialist focused on building modern AI-driven solutions.",
   stats: [
     { label: "Core Tech Stacks", value: "React & FastAPI", suffix: "" },
